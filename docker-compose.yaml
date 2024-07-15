@@ -1,0 +1,18 @@
+services:
+  app:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    env_file:
+      - .env.example
+  db:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=administrator
+      - POSTGRES_PASSWORD=12345678
+      - POSTGRES_DB=books
+    volumes:
+      - ./postgres/books:/var/lib/postgresql/data
