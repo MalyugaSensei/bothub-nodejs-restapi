@@ -5,9 +5,9 @@ import { Book } from 'src/books/models/book.model';
 import { BooksService } from 'src/books/book.service';
 
 @Module({
-    imports: [SequelizeModule.forFeature([Book])],
-    controllers: [BooksController],
-    providers: [BooksService],
+  imports: [SequelizeModule.forFeature([Book])],
+  controllers: [BooksController],
+  providers: [BooksService],
+  exports: [BooksService],
 })
-
 export class BooksModule { }

@@ -1,11 +1,9 @@
-import { JwtModule } from "@nestjs/jwt";
-import { jwtConstatnts } from './constants'
+import { JwtModule } from '@nestjs/jwt';
 
-export const jwtProvider =
-    JwtModule.register({
-        global: true,
-        secret: jwtConstatnts.secret,
-        signOptions: {
-            expiresIn: '60m'
-        }
-    })
+export const jwtProvider = JwtModule.register({
+  global: true,
+  secret: process.env.JWT_SECRET,
+  signOptions: {
+    expiresIn: process.env.JWT_EXPIRED,
+  },
+});

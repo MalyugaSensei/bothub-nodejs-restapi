@@ -1,23 +1,23 @@
-import { Column, CreatedAt, Default, DeletedAt, Model, Table, UpdatedAt } from "sequelize-typescript";
+import { Column, Default, Model, Table } from 'sequelize-typescript';
 
 @Table({
-    timestamps: true,
-    paranoid: true
+  timestamps: true,
+  paranoid: true,
 })
 export class User extends Model<User> {
-    @Column
-    username: string
+  @Column
+  username: string;
 
-    @Column
-    password: string
+  @Column
+  password: string;
 
-    @Column
-    email: string
+  @Column
+  email: string;
 
-    @Column
-    role: number
+  @Column
+  role: number;
 
-    @Default(false)
-    @Column
-    confirmed: boolean
+  @Default(false)
+  @Column
+  confirmed: boolean;
 }

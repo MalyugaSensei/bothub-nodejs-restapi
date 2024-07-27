@@ -1,8 +1,8 @@
-import { Address } from "nodemailer/lib/mailer"
+import { Address } from 'nodemailer/lib/mailer';
 
 export type SendEmailDto = {
-    subject: string,
-    recipients: Address[],
-    text: string,
-    placeholderReplacements?: Record<string, string>
-}
+  subject: string;
+  recipients: Address[];
+  text: string;
+  placeholderReplacements?: Record<string, string>;
+};

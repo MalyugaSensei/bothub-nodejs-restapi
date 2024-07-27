@@ -1,32 +1,32 @@
-import { Controller, Get, Post, Body, Param, Put, Req, Query, UseGuards, Inject, forwardRef, InternalServerErrorException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Put,
+  Req,
+  Query,
+} from '@nestjs/common';
 import { UsersService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginDto } from 'src/auth/dto/login.dto';
-import { CustomRequest } from 'src/auth/auth.guard';
+import { CustomRequest } from 'src/auth/guards/auth.guard';
 import { AuthService } from 'src/auth/auth.service';
-import { MailerService } from 'src/mailer/mailer.service';
-import { Public } from 'src/auth/public.decorator';
+import { Public } from 'src/auth/decorators/public.decorator';
+import { CryptoUtil } from 'src/common/utils/crypto.util';
 
 @Controller('users')
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
-    private readonly mailerService: MailerService,
     private readonly authService: AuthService,
-
-  ) { }
+  ) {}
 
   @Public()
   @Post('register')
-  async create(@Body() createUserDto: CreateUserDto) {
-    try {
-      const user = await this.authService.signUp(createUserDto);
-      await this.mailerService.sendUserConfirmation(user);
-      return { user };
-    } catch (error) {
-      console.log(error)
-      throw new InternalServerErrorException()
-    }
+  register(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.register(createUserDto);
   }
 
   @Public()
@@ -35,7 +35,7 @@ export class UsersController {
     return this.authService.signIn({
       email: loginDto.email,
       username: loginDto.username,
-      password: loginDto.password
+      password: loginDto.password,
     });
   }
 
@@ -48,13 +48,13 @@ export class UsersController {
   @Public()
   @Get('confirm')
   async confirm(@Query('access') token: string) {
-    const id = await this.mailerService.decryptAES(token)
+    const id = await CryptoUtil.decryptAES(token);
     const user = await this.usersService.confirm(+id);
     return { user };
   }
 
   @Put(':id/role')
-  update(@Param('id') id: string, @Body() role: string) {
+  update(@Param('id') id: string, @Body() role: number) {
     return this.usersService.update(+id, role);
   }
 }

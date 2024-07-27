@@ -1,6 +1,6 @@
 const constants = {
-    USER_TABLE: 'Users',
-    BOOK_TABLE: 'Books',
+  USER_TABLE: 'Users',
+  BOOK_TABLE: 'Books',
 };
 
-export { constants }
+export { constants };

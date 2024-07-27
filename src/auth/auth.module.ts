@@ -7,8 +7,12 @@ import { JwtModule } from 'src/auth/jwt/jwt.module';
 import { UsersModule } from 'src/users/user.module';
 
 @Module({
-  imports: [SequelizeModule.forFeature([User]), JwtModule, forwardRef(() => UsersModule)],
+  imports: [
+    SequelizeModule.forFeature([User]),
+    JwtModule,
+    forwardRef(() => UsersModule),
+  ],
   providers: [AuthService],
-  exports: [AuthService, JwtModule],
+  exports: [AuthService],
 })
 export class AuthModule { }
