@@ -1,7 +1,14 @@
-# Тестовое задание. Стек Nestjs App + Sequelize ORM + PostgreSQL
+# Тестовое задание. 
+
+## Стек
+* TypeScript
+* Nestjs (Express.js)
+* SequelizeORM
+* PostgreSQL
+* Docker + Compose
 
 ## env
-Переменные окружения для контейнера с posgresql задается в `environment` `docker-compose` файла, для nesjs в файле
+Переменные окружения для контейнера с posgresql задается в `environment` `docker-compose` файла, для Nestjs в файле
 `.env` или `.env.development.local`
 
 ## Запуск на host машине 
