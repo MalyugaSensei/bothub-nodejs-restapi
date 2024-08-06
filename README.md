@@ -35,21 +35,4 @@ $ docker compose -f "docker-compose.yaml" up -d --build
 `npx sequelize db:migrate && npx sequelize db:seed:all`
 
 ## Endpoints
-Entity User:
-* `POST users/register`  
-payload: `{username, email, password}`  
-response: `User`  
-description: Регистрирует пользователя, отправляет письмо на email и возвращает запись из бд 
-
-* `POST users/login`  
-payload: `{username?, email?, password}`  
-response: `access_token: <jwtToken>`,
-description: Выполняет аутентификацию пользователя(по `email` или `username`), если данные валидны, возвращает JWT токен. 
-
-* `GET /users/me`  
-jwtRequeired: `true`  
-response: `User`
-description: Возвращает текущего пользователя
-
-* `PUT`
-
+Swagger документ - http://localhost:3000/api/v1/

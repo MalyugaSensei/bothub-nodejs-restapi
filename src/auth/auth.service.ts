@@ -12,6 +12,7 @@ import { LoginDto } from 'src/auth/dto/login.dto';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/user.service';
 import { CryptoUtil } from 'src/common/utils/crypto.util';
+import { User } from 'src/users/models/user.model';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +22,7 @@ export class AuthService {
     private readonly userService: UsersService,
   ) { }
 
-  async signUp(createUserDto: CreateUserDto): Promise<any> {
+  async signUp(createUserDto: CreateUserDto): Promise<User> {
     const hashPass = await CryptoUtil.hashPassword(createUserDto.password);
 
     const [user, created] = await this.userService.create({
@@ -37,7 +38,7 @@ export class AuthService {
     return user;
   }
 
-  async signIn({ username, email, password }: LoginDto): Promise<any> {
+  async signIn({ username, email, password }: LoginDto): Promise<{ access_token: string }> {
     const user = await this.userService.findOneByUsernameOrEmail({
       username,
       email,

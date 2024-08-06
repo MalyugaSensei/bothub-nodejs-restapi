@@ -14,29 +14,81 @@ import { UserRole } from 'src/users/roles';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { Book } from 'src/books/models/book.model';
+import { ApiOkResponse } from '@nestjs/swagger';
 
 @Controller('books')
 export class BooksController {
-  constructor(private booksService: BooksService) {}
+  constructor(private booksService: BooksService) { }
 
+  @ApiOkResponse({
+    schema: {
+      type: 'object',
+      properties: {
+        id: { type: 'number' },
+        title: { type: 'string' },
+        author: { type: 'string' },
+        publicationDate: { type: 'string' },
+        genres: { type: 'array', items: { type: 'string' } },
+      }
+    },
+  })
   @Post()
   @Roles(UserRole.ADMIN)
   async create(@Body() createBookDto: CreateBookDto): Promise<Book> {
     return this.booksService.create(createBookDto);
   }
 
+  @ApiOkResponse({
+    schema: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          id: { type: 'number' },
+          title: { type: 'string' },
+          author: { type: 'string' },
+          publicationDate: { type: 'string' },
+          genres: { type: 'array', items: { type: 'string' } },
+        }
+      }
+    },
+  })
   @Public()
   @Get()
   async findAll(): Promise<Book[]> {
     return this.booksService.findAll();
   }
 
+  @ApiOkResponse({
+    schema: {
+      type: 'object',
+      properties: {
+        id: { type: 'number' },
+        title: { type: 'string' },
+        author: { type: 'string' },
+        publicationDate: { type: 'string' },
+        genres: { type: 'array', items: { type: 'string' } },
+      }
+    },
+  })
   @Public()
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Book> {
     return this.booksService.findOne(id);
   }
 
+  @ApiOkResponse({
+    schema: {
+      type: 'object',
+      properties: {
+        id: { type: 'number' },
+        title: { type: 'string' },
+        author: { type: 'string' },
+        publicationDate: { type: 'string' },
+        genres: { type: 'array', items: { type: 'string' } },
+      }
+    },
+  })
   @Put(':id')
   @Roles(UserRole.ADMIN)
   async update(
@@ -46,6 +98,14 @@ export class BooksController {
     return this.booksService.update(id, updateBookDto);
   }
 
+  @ApiOkResponse({
+    schema: {
+      type: 'object',
+      properties: {
+        msg: { type: 'string' },
+      }
+    },
+  })
   @Delete(':id')
   @Roles(UserRole.ADMIN)
   async remove(@Param('id') id: string) {

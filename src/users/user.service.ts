@@ -25,7 +25,7 @@ export class UsersService {
     private readonly userModel: typeof User,
   ) { }
 
-  async register(createUserDto: CreateUserDto) {
+  async register(createUserDto: CreateUserDto): Promise<{ user: User }> {
     try {
       const user = await this.authService.signUp(createUserDto);
       await this.mailerService.sendUserConfirmation(user);
@@ -66,8 +66,8 @@ export class UsersService {
     });
   }
 
-  update(id: number, role: number) {
-    return this.userModel.update({ role }, { where: { id } });
+  async update(id: number, role: number) {
+    return await this.userModel.update({ role }, { where: { id }, returning: true });
   }
 
   async confirm(id: number): Promise<User | { message: string }> {
